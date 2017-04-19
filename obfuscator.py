@@ -77,7 +77,7 @@ def main():
             good = True
         except:
             inputfile = input("Please enter a valid filename.\n>>>")
-    inputcode = base64.b64encode(zlib.compress(inputfileObj.read().encode('utf-8')), 9)
+    inputcode = base64.b64encode(zlib.compress(inputfileObj.read().encode('utf-8'), 9))
     print("The generated code is:\n\n%s\n\n" % str(inputcode))
     finalcodedata = convert(str(inputcode))
     print("The obfuscated bytes are:\n\n%s\n\n" % finalcodedata)
