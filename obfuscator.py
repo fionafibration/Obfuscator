@@ -1,21 +1,6 @@
-import base64, zlib
 from math import ceil, log
-
-
-prefix = """__, ___, ____, _____, ______, _______, ________, _________ = getattr(__import__("builtins"), "range")(1, 9)
-__________ = """
-suffix = """
-getattr(__import__("random"), "seed")((((______ << ___) + __) << __))
-________________ = getattr(__import__("builtins"), "list")(getattr(__import__("string"), "ascii_lowercase") + getattr(__import__("string"), "digits"))
-getattr(__import__("random"), "shuffle")(________________)
-_ = "".join(________________)
-___________ = lambda f, n: f(f, n)
-____________ = lambda f, n: chr(n % _____________) + f(f, n // _____________) if n else ""
-_____________ = (__ << _________)
-______________ = ___________(____________, __________)
-_______________ = getattr(__import__(_[34] + _[15] + _[14] + _[12] + _[5] + _[14] + _[22] + _[23]), _[30] + _[27] + _[20] + _[12])(______________)
-getattr(__import__(_[34] + _[15] + _[14] + _[12] + _[5] + _[14] + _[22] + _[23]), _[30] + _[27] + _[20] + _[12])(getattr(__import__(_[34] + _[15] + _[14] + _[12] + _[5] + _[14] + _[22] + _[23]), _[24] + _[31] + _[1] + _[32] + _[14] + _[12] + _[30])(getattr(__import__(_[7] + _[12] + _[14] + _[34]), _[28] + _[30] + _[24] + _[31] + _[1] + _[32] + _[33] + _[30] + _[23] + _[23])(getattr(__import__(_[34] + _[20] + _[23] + _[30] + _[4] + _[6]), _[34] + _[4] + _[6] + _[28] + _[30] + _[24] + _[31] + _[28] + _[30])(_______________)), "<" + _[23] + _[5] + _[33] + _[14] + _[22] + _[18] + ">", _[30] + _[29] + _[30] + _[24]))"""
-
+import marshal
+import sys
 
 def encode(num, depth):
     if num == 0:
@@ -51,40 +36,37 @@ def numconvert(num, depth=0):
     return result
 
 
+def get_blocks(message, block_size=256):
+    block_nums = []
+
+    for block in [message[i:i + block_size] for i in range(0, len(message), block_size)]:
+
+        block_num = 0
+        block = block[::-1]
+
+        for i, char in enumerate(block):
+            block_num += char * (256 ** i)
+
+        block_nums.append(block_num)
+
+    return block_nums
+
+
 def convert(instring, depth=0):
-    liststr = list(instring)
-    codes = []
-    for c in liststr:
-        codes.append(ord(str(c)))
-    outnum = sum(codes[i] * 256 ** i for i in range(len(codes)))
-    return numconvert(outnum, depth)
+    blocks = get_blocks(instring, block_size=16)
+    for i, block in enumerate(blocks):
+        converted = numconvert(block)
+        yield converted
 
 
 def main():
-    inputfile = input("What would you like the input file to be?\n>>>")
-    good = False
-    while good != True:
-        try:
-            inputfileObj = open(inputfile, 'r')
-            good = True
-        except:
-            inputfile = input("Please enter a valid filename.\n>>>")	
-    outputfile = input("What would you like the output file to be?\n>>>")
-    good = False
-    while good != True:
-        try:
-            outputfileObj = open(outputfile, 'w')
-            good = True
-        except:
-            inputfile = input("Please enter a valid filename.\n>>>")
-    inputcode = base64.b64encode(zlib.compress(inputfileObj.read().encode('utf-8'), 9))
-    print("The generated code is:\n\n%s\n\n" % str(inputcode))
-    finalcodedata = convert(str(inputcode))
-    print("The obfuscated bytes are:\n\n%s\n\n" % finalcodedata)
-    outputcode = (prefix + finalcodedata) + suffix
-    outputfileObj.write(outputcode)
-    outputfileObj.close()
-    print("File has been written to. The final code is:\n\n\n%s\n\n\n" % outputcode)
+    import hashlib
+    code_bytes = marshal.dumps(compile(sys.stdin.read(), '<string>', 'exec'))
+    sys.stderr.write(hashlib.sha256(code_bytes).hexdigest())
+    finalcodedata = ', '.join(convert(code_bytes))
+    sys.stdout.write('''__, ___, ____, _____, ______, _______, ________, _________ = range(1, 9)\n_ = [''')
+    sys.stdout.write(finalcodedata)
+    sys.stdout.write(''']\n____________ = lambda f, k: b''.join([f(f, n)[::-1] for n in k])\n_____________ = lambda f, n: bytes([n % 256]) + f(f, n // 256) if n else b""''')
 
 if __name__ == '__main__':
     main()
