@@ -4,7 +4,7 @@ import sys
 
 def encode(num, depth):
     if num == 0:
-        return "_ - _"
+        return "__ - __"
     if num <= 8:
         return "_" * (num + 1)
     return "(" + numconvert(num, depth + 1) + ")"
@@ -40,9 +40,9 @@ def get_blocks(message, block_size=256):
     block_nums = []
 
     for block in [message[i:i + block_size] for i in range(0, len(message), block_size)]:
-
+        block = b'\x80' + block + b'\x80'
         block_num = 0
-        block = block[::-1]
+        block = block
 
         for i, char in enumerate(block):
             block_num += char * (256 ** i)
@@ -52,21 +52,25 @@ def get_blocks(message, block_size=256):
     return block_nums
 
 
-def convert(instring, depth=0):
+def convert(instring):
     blocks = get_blocks(instring, block_size=16)
     for i, block in enumerate(blocks):
-        converted = numconvert(block)
-        yield converted
+        print
+    return [numconvert(block) for block, _ in blocks]
 
 
 def main():
-    import hashlib
-    code_bytes = marshal.dumps(compile(sys.stdin.read(), '<string>', 'exec'))
-    sys.stderr.write(hashlib.sha256(code_bytes).hexdigest())
-    finalcodedata = ', '.join(convert(code_bytes))
-    sys.stdout.write('''__, ___, ____, _____, ______, _______, ________, _________ = range(1, 9)\n_ = [''')
-    sys.stdout.write(finalcodedata)
-    sys.stdout.write(''']\n____________ = lambda f, k: b''.join([f(f, n)[::-1] for n in k])\n_____________ = lambda f, n: bytes([n % 256]) + f(f, n // 256) if n else b""''')
+    code_bytes = marshal.dumps(compile(sys.stdin.read(), '<string>', 'exec'), 2)
+    encoded = ', '.join(convert(code_bytes))
+    sys.stdout.write('''__, ___, ____, _____, ______, _______, ________, _________ = getattr(__import__("\\x62\\x75\\x69\\x6c\\x74\\x69\\x6e\\x73"), "\\x72\\x61\\x6e\\x67\\x65")(1, 9)
+_ = [''')
+    sys.stdout.write(encoded)
+    sys.stdout.write(''']
+____________ = lambda f, k: b''.__getattribute__("\\x6a\\x6f\\x69\\x6e")([f(f, n)[__:__ - ___] for n in k])
+_____________ = lambda f, n: getattr(__import__("\\x62\\x75\\x69\\x6c\\x74\\x69\\x6e\\x73"), "\\x62\\x79\\x74\\x65\\x73")([n % (__ << _________)]) + f(f, n // (__ << _________)) if n else b""
+______________ = ____________(_____________, _)
+_______________ = getattr(__import__("\\x6d\\x61\\x72\\x73\\x68\\x61\\x6c"), "\\x6c\\x6f\\x61\\x64\\x73")(______________)
+getattr(__import__("\\x62\\x75\\x69\\x6c\\x74\\x69\\x6e\\x73"), "\\x65\\x78\\x65\\x63")(_______________)''')
 
 if __name__ == '__main__':
     main()
