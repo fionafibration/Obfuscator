@@ -54,9 +54,7 @@ def get_blocks(message, block_size=256):
 
 def convert(instring):
     blocks = get_blocks(instring, block_size=16)
-    for i, block in enumerate(blocks):
-        print
-    return [numconvert(block) for block, _ in blocks]
+    return [numconvert(block) for block in blocks]
 
 
 def main():
@@ -66,11 +64,9 @@ def main():
 _ = [''')
     sys.stdout.write(encoded)
     sys.stdout.write(''']
-____________ = lambda f, k: b''.__getattribute__("\\x6a\\x6f\\x69\\x6e")([f(f, n)[__:__ - ___] for n in k])
+____________ = lambda f, k: getattr(b'', "\\x6a\\x6f\\x69\\x6e")([f(f, n)[__:__ - ___] for n in k])
 _____________ = lambda f, n: getattr(__import__("\\x62\\x75\\x69\\x6c\\x74\\x69\\x6e\\x73"), "\\x62\\x79\\x74\\x65\\x73")([n % (__ << _________)]) + f(f, n // (__ << _________)) if n else b""
-______________ = ____________(_____________, _)
-_______________ = getattr(__import__("\\x6d\\x61\\x72\\x73\\x68\\x61\\x6c"), "\\x6c\\x6f\\x61\\x64\\x73")(______________)
-getattr(__import__("\\x62\\x75\\x69\\x6c\\x74\\x69\\x6e\\x73"), "\\x65\\x78\\x65\\x63")(_______________)''')
+getattr(__import__("\\x62\\x75\\x69\\x6c\\x74\\x69\\x6e\\x73"), "\\x65\\x78\\x65\\x63")(getattr(__import__("\\x6d\\x61\\x72\\x73\\x68\\x61\\x6c"), "\\x6c\\x6f\\x61\\x64\\x73")(____________(_____________, _)))''')
 
 if __name__ == '__main__':
     main()
