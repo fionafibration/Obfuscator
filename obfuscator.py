@@ -38,7 +38,7 @@ def numconvert(num, depth=0):
     return result
 
 
-def get_blocks(message, block_size=256):
+def get_blocks(message, block_size=16):
     block_nums = []
 
     for block in [message[i:i + block_size] for i in range(0, len(message), block_size)]:
@@ -55,7 +55,7 @@ def get_blocks(message, block_size=256):
 
 
 def convert(instring):
-    blocks = get_blocks(instring, block_size=16)
+    blocks = get_blocks(instring)
     return [numconvert(block) for block in blocks]
 
 
