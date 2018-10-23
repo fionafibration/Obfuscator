@@ -20,7 +20,7 @@ def numconvert(num, depth=0):
         span = int(ceil(log(-num if num < 0 else num, 1.5))) + (16 >> depth)
         for test_base in range(span):
             for test_shift in range(span):
-                test_diff = -num if num < 0 else num - (test_base << test_shift)
+                test_diff = (-num if num < 0 else num) - (test_base << test_shift)
                 if (-test_diff if test_diff < 0 else test_diff) < (-diff if diff < 0 else diff):
                     diff = test_diff
                     base = test_base
