@@ -2,6 +2,9 @@ from math import log
 from operator import xor
 from copy import deepcopy
 from functools import reduce
+
+# From github.com/ThePlasmaRailgun/keccak
+
 RoundConstants = [
     0x0000000000000001, 0x0000000000008082, 0x800000000000808A, 0x8000000080008000,
     0x000000000000808B, 0x0000000080000001, 0x8000000080008081, 0x8000000000008009,
