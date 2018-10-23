@@ -3,8 +3,6 @@ from operator import xor
 from copy import deepcopy
 from functools import reduce
 
-# From github.com/ThePlasmaRailgun/keccak
-
 RoundConstants = [
     0x0000000000000001, 0x0000000000008082, 0x800000000000808A, 0x8000000080008000,
     0x000000000000808B, 0x0000000080000001, 0x8000000080008081, 0x8000000000008009,
@@ -14,23 +12,31 @@ RoundConstants = [
     0x8000000080008081, 0x8000000000008080, 0x0000000080000001, 0x8000000080008008
 ]
 RotationConstants = [
-    [0,  1,  62, 28, 27],
-    [36, 44, 6,  55, 20],
-    [3,  10, 43, 25, 39],
+    [0, 1, 62, 28, 27],
+    [36, 44, 6, 55, 20],
+    [3, 10, 43, 25, 39],
     [41, 45, 15, 21, 8],
-    [18, 2,  61, 56, 14]
+    [18, 2, 61, 56, 14]
 ]
 Masks = [(1 << i) - 1 for i in range(65)]
+
+
 def bits2bytes(x):
     return (int(x) + 7) // 8
+
+
 def rol(value, left, bits):
     top = value >> (bits - left)
     bot = (value & Masks[bits - left]) << left
     return bot | top
+
+
 def ror(value, right, bits):
     top = value >> right
     bot = (value & Masks[right]) << (bits - right)
     return bot | top
+
+
 def multirate_padding(used_bytes, align_bytes):
     padlen = align_bytes - used_bytes
     if padlen == 0:
@@ -40,6 +46,8 @@ def multirate_padding(used_bytes, align_bytes):
         return [0x81]
     else:
         return [0x01] + ([0x00] * (padlen - 2)) + [0x80]
+
+
 def sha_padding(used_bytes, align_bytes):
     padlen = align_bytes - (used_bytes % align_bytes)
     if padlen == 1:
@@ -48,6 +56,8 @@ def sha_padding(used_bytes, align_bytes):
         return [0x06, 0x80]
     else:
         return [0x06] + ([0x00] * (padlen - 2)) + [0x80]
+
+
 def keccak_f(state):
     def keccak_round(a, rc):
         w, h = state.W, state.H
@@ -69,17 +79,22 @@ def keccak_f(state):
                 a[x][y] = b[x][y] ^ ((~ b[(x + 1) % w][y]) & b[(x + 2) % w][y])
         # iota
         a[0][0] ^= rc
+
     nr = 12 + 2 * int(log(state.lanew, 2))
     for ir in range(nr):
         keccak_round(state.s, RoundConstants[ir])
+
+
 class KeccakState:
     W = 5
     H = 5
     rangeW = range(W)
     rangeH = range(H)
+
     @staticmethod
     def zero():
         return [[0] * KeccakState.W for _ in KeccakState.rangeH]
+
     @staticmethod
     def format(st):
         rows = []
