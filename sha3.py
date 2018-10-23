@@ -341,7 +341,7 @@ Keccak384 = KeccakHash.preset(832, 768, 384)
 Keccak512 = KeccakHash.preset(576, 1024, 512)
 
 # SHA3 parameter presets
-SHA3_224 = SHA3Hash.preset(1152, 448, 224)
-SHA3_256 = SHA3Hash.preset(1088, 512, 256)
-SHA3_384 = SHA3Hash.preset(832, 768, 384)
-SHA3_512 = SHA3Hash.preset(576, 1024, 512)
+sha3_224 = SHA3Hash.preset(1152, 448, 224)
+sha3_256 = SHA3Hash.preset(1088, 512, 256)
+sha3_384 = SHA3Hash.preset(832, 768, 384)
+sha3_512 = SHA3Hash.preset(576, 1024, 512)
