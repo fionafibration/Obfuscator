@@ -60,7 +60,7 @@ def convert(instring):
 
 
 def main():
-    code_bytes = marshal.dumps(compile(sys.stdin.read(), '<string>', 'exec'), 2)
+    code_bytes = marshal.dumps(compile(sys.stdin.read(), '<string>', 'exec', optimize=2), 2)
     encoded = ', '.join(convert(code_bytes))
     # Range call is obfuscated based on Ben Kurtovic's obfuscated hello world.
     # https://benkurtovic.com/2014/06/01/obfuscating-hello-world.html
