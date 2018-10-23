@@ -9,7 +9,7 @@ def encode(num, depth):
         return "_" * (num + 1)
     return "(" + numconvert(num, depth + 1) + ")"
 
-
+# Ben Kurtovic's bitshift conversion algorithm: https://benkurtovic.com/2014/06/01/obfuscating-hello-world.html
 def numconvert(num, depth=0):
     result = ""
     while num:
@@ -60,13 +60,11 @@ def convert(instring):
 def main():
     code_bytes = marshal.dumps(compile(sys.stdin.read(), '<string>', 'exec'), 2)
     encoded = ', '.join(convert(code_bytes))
-    sys.stdout.write('''__, ___, ____, _____, ______, _______, ________, _________ = getattr(__import__("\\x62\\x75\\x69\\x6c\\x74\\x69\\x6e\\x73"), "\\x72\\x61\\x6e\\x67\\x65")(1, 9)
-_ = [''')
+    # Range call is obfuscated based on Ben Kurtovic's obfuscated hello world. https://benkurtovic.com/2014/06/01/obfuscating-hello-world.html
+    sys.stdout.write('''(lambda __, ___, ____, _____, ______, _______, ________, _________, __________: getattr(__import__("\\x62\\x75\\x69\\x6c\\x74\\x69\\x6e\\x73"), "\\x65\\x78\\x65\\x63")(getattr(__import__("\\x6d\\x61\\x72\\x73\\x68\\x61\\x6c"), "\\x6c\\x6f\\x61\\x64\\x73")((lambda _________________: getattr(b'', "\\x6a\\x6f\\x69\\x6e")([(lambda _______________, ________________: getattr(__import__("\\x62\\x75\\x69\\x6c\\x74\\x69\\x6e\\x73"), "\\x62\\x79\\x74\\x65\\x73")([________________ % (__ << _________)]) + _______________(_______________, ________________ // (__ << _________)) if ________________ else b"")((lambda _______________, ________________: getattr(__import__("\\x62\\x75\\x69\\x6c\\x74\\x69\\x6e\\x73"), "\\x62\\x79\\x74\\x65\\x73")([________________ % (__ << _________)]) + _______________(_______________, ________________ // (__ << _________)) if ________________ else b""), ___________________________)[__:__ - ___] for ___________________________ in _________________]))([''')
     sys.stdout.write(encoded)
-    sys.stdout.write(''']
-____________ = lambda f, k: getattr(b'', "\\x6a\\x6f\\x69\\x6e")([f(f, n)[__:__ - ___] for n in k])
-_____________ = lambda f, n: getattr(__import__("\\x62\\x75\\x69\\x6c\\x74\\x69\\x6e\\x73"), "\\x62\\x79\\x74\\x65\\x73")([n % (__ << _________)]) + f(f, n // (__ << _________)) if n else b""
-getattr(__import__("\\x62\\x75\\x69\\x6c\\x74\\x69\\x6e\\x73"), "\\x65\\x78\\x65\\x63")(getattr(__import__("\\x6d\\x61\\x72\\x73\\x68\\x61\\x6c"), "\\x6c\\x6f\\x61\\x64\\x73")(____________(_____________, _)))''')
+    sys.stdout.write(''']))))(*(lambda _, __, ___: _(_, __, ___))((lambda _, __, ___: [__(___[(lambda: _).__code__.co_nlocals])] +_(_, __, ___[(lambda _: _).__code__.co_nlocals:]) if ___ else []), lambda _: _.__code__.co_argcount, (lambda _: _, lambda _, __: _, lambda _, __, ___: _, lambda _, __, ___, ____: _, lambda _, __, ___, ____, _____: _, lambda _, __, ___, ____, _____, ______: _, lambda _, __, ___, ____, _____, ______, _______: _, lambda _, __, ___, ____, _____, ______, _______, ________: _, lambda _, __, ___, ____, _____, ______, _______, ________, _________: _)))''')
+
 
 if __name__ == '__main__':
     main()
