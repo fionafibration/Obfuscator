@@ -11,7 +11,8 @@ def encode(num, depth):
     return "(" + numconvert(num, depth + 1) + ")"
 
 
-# Ben Kurtovic's bitshift conversion algorithm: https://benkurtovic.com/2014/06/01/obfuscating-hello-world.html
+# Ben Kurtovic's bitshift conversion algorithm:
+# https://benkurtovic.com/2014/06/01/obfuscating-hello-world.html
 def numconvert(num, depth=0):
     result = ""
     while num:
@@ -64,9 +65,29 @@ def main():
     encoded = ', '.join(convert(code_bytes))
     # Range call is obfuscated based on Ben Kurtovic's obfuscated hello world.
     # https://benkurtovic.com/2014/06/01/obfuscating-hello-world.html
-    sys.stdout.write("(lambda __, ___, ____, _____, ______, _______, ________, _________: getattr(__import__('\\x62\\x75\\x69\\x6c\\x74\\x69\\x6e\\x73'), '\\x65\\x78\\x65\\x63')(getattr(__import__('\\x6d\\x61\\x72\\x73\\x68\\x61\\x6c'), '\\x6c\\x6f\\x61\\x64\\x73')((lambda ______________, _______________: getattr((lambda: 0).__code__.co_lnotab, '\\x6a\\x6f\\x69\\x6e')([______________(______________, ________________)[__:__ - ___] for ________________ in _______________]))(lambda _________________, __________________: getattr(__import__('\\x62\\x75\\x69\\x6c\\x74\\x69\\x6e\\x73'), '\\x62\\x79\\x74\\x65\\x73')([__________________ % (__ << _________)]) + _________________(_________________, __________________ // (__ << _________)) if __________________ else (lambda: 0).__code__.co_lnotab, [")
+    sys.stdout.write("(lambda __, ___, ____, _____, ______, _______, ________, _________: getattr("
+                     "__import__('\\x62\\x75\\x69\\x6c\\x74\\x69\\x6e\\x73'),"
+                     " '\\x65\\x78\\x65\\x63')(getattr(__import__("
+                     "'\\x6d\\x61\\x72\\x73\\x68\\x61\\x6c'), '\\x6c\\x6f\\x61\\x64\\x73')"
+                     "((lambda ______________, _______________: getattr("
+                     "(lambda: 0).__code__.co_lnotab, '\\x6a\\x6f\\x69\\x6e')("
+                     "[______________(______________, ________________)[__:__ - ___] "
+                     "for ________________ in _______________]))(lambda _________________,"
+                     " __________________: getattr(__import__("
+                     "'\\x62\\x75\\x69\\x6c\\x74\\x69\\x6e\\x73'),"
+                     " '\\x62\\x79\\x74\\x65\\x73')([__________________ %"
+                     " (__ << _________)]) + _________________(_________________,"
+                     " __________________ // (__ << _________)) if"
+                     " __________________ else (lambda: 0).__code__.co_lnotab, [")
     sys.stdout.write(encoded)
-    sys.stdout.write("])), getattr(__import__('\\x62\\x75\\x69\\x6c\\x74\\x69\\x6e\\x73'), '\\x67\\x6c\\x6f\\x62\\x61\\x6c\\x73')()))(*(lambda _, __, ___: _(_, __, ___))((lambda _, __, ___: [__(___[(lambda: _).__code__.co_nlocals])] + _(_, __, ___[(lambda _: _).__code__.co_nlocals:]) if ___ else []), lambda _: _.__code__.co_argcount, (lambda _: _, lambda _, __: _, lambda _, __, ___: _, lambda _, __, ___, ____: _, lambda _, __, ___, ____, _____: _, lambda _, __, ___, ____, _____, ______: _, lambda _, __, ___, ____, _____, ______, _______: _, lambda _, __, ___, ____, _____, ______, _______, ________: _)))")
+    sys.stdout.write("])), getattr(__import__('\\x62\\x75\\x69\\x6c\\x74\\x69\\x6e\\x73'),"
+                     " '\\x67\\x6c\\x6f\\x62\\x61\\x6c\\x73')()))(*(lambda _, __, ___:"
+                     " _(_, __, ___))((lambda _, __, ___: [__(___[(lambda: _).__code__.co_nlocals])"
+                     "] + _(_, __, ___[(lambda _: _).__code__.co_nlocals:]) if ___ else []), lambda"
+                     " _: _.__code__.co_argcount, (lambda _: _, lambda _, __: _, lambda _, __, ___:"
+                     " _, lambda _, __, ___, ____: _, lambda _, __, ___, ____, _____: _, lambda"
+                     " _, __, ___, ____, _____, ______: _, lambda _, __, ___, ____, _____, ______,"
+                     " _______: _, lambda _, __, ___, ____, _____, ______, _______, ________: _)))")
 
 
 if __name__ == '__main__':
