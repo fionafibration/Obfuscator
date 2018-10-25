@@ -11,8 +11,7 @@ def encode(num, depth):
     return "(" + numconvert(num, depth + 1) + ")"
 
 
-# Ben Kurtovic's bitshift conversion algorithm:
-# https://benkurtovic.com/2014/06/01/obfuscating-hello-world.html
+# Ben Kurtovic's bitshift conversion algorithm: https://benkurtovic.com/2014/06/01/obfuscating-hello-world.html
 def numconvert(num, depth=0):
     result = ""
     while num:
