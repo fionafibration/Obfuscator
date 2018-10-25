@@ -5,16 +5,16 @@ import sys
 
 def encode(num, depth):
     if num == 0:
-        return "__ - __"
+        return '__ - __'
     if num <= 8:
-        return "_" * (num + 1)
-    return "(" + numconvert(num, depth + 1) + ")"
+        return '_' * (num + 1)
+    return '(' + numconvert(num, depth + 1) + ')'
 
 
 # Ben Kurtovic's bitshift conversion algorithm:
 # https://benkurtovic.com/2014/06/01/obfuscating-hello-world.html
 def numconvert(num, depth=0):
-    result = ""
+    result = ''
     while num:
         base = shift = 0
         diff = num
@@ -27,13 +27,13 @@ def numconvert(num, depth=0):
                     base = test_base
                     shift = test_shift
         if result:
-            result += " + " if num > 0 else " - "
+            result += ' + ' if num > 0 else ' - '
         elif num < 0:
             base = -base
         if shift == 0:
             result += encode(base, depth)
         else:
-            result += "(%s << %s)" % (encode(base, depth),
+            result += '(%s << %s)' % (encode(base, depth),
                                       encode(shift, depth))
         num = diff if num > 0 else -diff
     return result
